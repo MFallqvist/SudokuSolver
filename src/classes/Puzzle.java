@@ -1,3 +1,4 @@
+package classes;
 public interface Puzzle {
     // Returns true if puzzle is solved
     boolean isSolved();
