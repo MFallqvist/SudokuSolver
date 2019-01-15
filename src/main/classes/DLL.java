@@ -1,14 +1,13 @@
 package main.classes;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Vector;
-import main.helper.*;
+import java.util.List;
 
 // Class for Doubly Linked List
 public class DLL {
-    ColumnNode root; // root of list
-    LinkedList<Node> solution;
+    private ColumnNode root; // root of list
+    private List<Node> solution = new ArrayList<>();
+    private int solutions;
 
     DLL(int[][] sudoku){
         root = DLL_grid(sudoku);
@@ -16,16 +15,12 @@ public class DLL {
     }
     /* Doubly Linked list Node*/
     public class Node {
-        int data, row;
-        Node up, down, left, right, center;
+        int data=1, row;
+        Node up, down, left, right;
         ColumnNode col;
 
         // Constructor to create a new node
         // next and prev is by default initialized as null
-        Node(int d, int r) {
-            data = d;
-            row = r;
-        }
         Node() {
             data = 0;
             row = 0;
@@ -51,6 +46,7 @@ public class DLL {
             n1.up = this;
             this.down = n1;
             return n1;
+
         }
 
     }
@@ -61,33 +57,33 @@ public class DLL {
             super();
             name = n;
             col = this;
-            //size = 0;
         }
     }
-
-    void search(Node h, int k, LinkedList<Node> s){
-        // h = root column object, k = current search depth, s = solution
+    // Based on Algorithm-X
+    private void search(int k){
+        System.out.print("Function call search, depth: "+k+"\n");
         Node c, r, j;
-        if(root.right.equals(root)) {
-            print_solution(s);
+        if(root.right==root) {
+            print_solution();
             return;
         }else{
-            c = choose_column_object(h);
+            c = choose_column_object();
             r = c.down;
-            while (!r.equals(c)){
-                s.push(r);
+            while (r!=c){
+                solution.add(r);
+                System.out.print("solution size: "+solution.size()+"\n");
                 j = r.right;
-                while (!j.equals(r)){
-                    cover(j.center);
+                while (j!=r){
+                    cover(j.col);
                     j = j.right;
                 }
-                search(h,k+1, s);
+                search(k+1);
                 // Pop data object from s
-                r = s.pop();
-                c = r.center;
+                r = solution.remove(solution.size()-1);
+                c = r.col;
                 j = r.left;
-                while (!j.equals(r)){
-                    uncover(j.center);
+                while (j!=r){
+                    uncover(j.col);
                     j = j.left;
                 }
                 r = r.down;
@@ -96,13 +92,16 @@ public class DLL {
             return;
         }
     }
+
+
     // Used to backtrack to covered Node
     public void uncover(Node c){
+        //System.out.print("Function call uncover, c.col.size: " +c.col.size+" \n");
         Node i, j;
         i = c.up;
-        while(!i.equals(c)){
+        while(i!=c){
             j = i.left;
-            while (!j.equals(i)){
+            while (j!=i){
                 j.col.size -= 1; //S[C[j]] ← S[C[j]] − 1
                 j.down.up = j;
                 j.up.down = j;
@@ -115,14 +114,14 @@ public class DLL {
     }
     // Used to cover Node and all connected data points in that same column
     public void cover(Node c){
-        // To be implemented, change pointers etc
+        //System.out.print("Function call cover, c.col.size: " +c.col.size+" \n");
         Node i, j;
         c.right.left = c.left;
         c.left.right = c.right;
         i = c.down;
-        while (!i.equals(c)){
+        while (i!=c){
             j = i.right;
-            while (!j.equals(i)){
+            while (j!=i){
                 j.down.up = j.up;
                 j.up.down = j.down;
                 j.col.size -= 1; // S[C[j]] ← S[C[j]] − 1
@@ -132,57 +131,43 @@ public class DLL {
         }
     }
 
-    // Push a node to front
-    public void push(int data, int row)
-    {
-        /* 1. allocate node
-           2. put in the data */
-        ColumnNode new_Node = new ColumnNode("root"); //Node(data, row);
-
-        /* 3 Make right of new node as root and previous as NULL */
-        new_Node.right = root;
-        new_Node.left = null;
-        /* 4 Link up and down of new node */
-        new_Node.down=root.down;
-        new_Node.up=root.up;
-
-
-        /* 5. change prev of head node to new node */
-        if (root != null)
-            root.left = new_Node;
-
-        /* 6. move the head to point to the new node */
-        root = new_Node;
-    }
-
-
-    Node choose_column_object(Node obj){
-        Node chosen, candidate;
-        int min;
-        candidate = obj.right;
-        min = candidate.col.size;
-        chosen = candidate;
-        while (!candidate.equals(null)){
+    ColumnNode choose_column_object(){
+        //System.out.print("Function call choose_column_object\n");
+        ColumnNode chosen;
+        Node candidate;
+        int min = Integer.MAX_VALUE;
+        candidate = root.right;
+        chosen = null;
+        while (candidate!=root){
             if (candidate.col.size < min){
-                chosen = candidate;
+                //System.out.print("chosen a candidate with col.size: "+candidate.col.size +" and name: " + candidate.col.name+ "\n");
+                chosen = candidate.col;
                 min = chosen.col.size;
             }
             else{
+                candidate=candidate.right;
                 continue;
             }
+
         }
         return chosen;
     }
-    void print_solution(LinkedList<Node> s){
+    void print_solution(){
+        System.out.print("Function call print_solution, size: " +solution.size()+"\n");
         Node i;
-        i = s.pop().right;
-        while(!i.equals(s)){ // equal must be null?
-            System.out.print(i.center.col.name); // print (N[C[i]])
-            i = i.right;
+        try {
+            i = solution.remove(solution.size() - 1);
+            while (i != i.right) {
+                System.out.print(i.col.name); // print (N[C[i]])
+                i = i.right;
+            }
+        }catch(Exception e){
+            new Error("No solution found: "+e);
         }
     }
     // Returns the root column header node used in DLL solve process
     public ColumnNode DLL_grid(int[][] grid){
+        //System.out.print("Function call DLL_grid \n");
         final int COLS = grid[0].length;
         final int ROWS = grid.length;
 
@@ -216,9 +201,8 @@ public class DLL {
     };
 
     public void runSolver(){
-        solution = new LinkedList<Node>();
-        search(root,0,solution);
-        //if(verbose) showInfo();
+        search(0);
+        print_solution();
     }
 
 }

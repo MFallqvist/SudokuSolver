@@ -35,11 +35,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/classes/PuzzleImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="133">
+              <caret line="54" column="41" lean-forward="true" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
               <folding>
-                <element signature="e#518#519#0" expanded="true" />
-                <element signature="e#545#546#0" expanded="true" />
                 <element signature="e#4776#4777#0" expanded="true" />
                 <element signature="e#4844#4845#0" expanded="true" />
               </folding>
@@ -50,12 +48,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/classes/DLL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="220" column="33" lean-forward="true" selection-start-line="220" selection-start-column="33" selection-end-line="220" selection-end-column="33" />
+            <state relative-caret-position="969">
+              <caret line="204" column="18" lean-forward="true" selection-start-line="204" selection-start-column="18" selection-end-line="204" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#push#0;class#DLL#0" />
-                <element signature="e#4531#4543#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,8 +77,13 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>choose_column_object</find>
       <find>DLL_grid</find>
+      <find>hookDown</find>
+      <find>print_solution</find>
+      <find>choose_column_object</find>
+      <find>runSolver</find>
+      <find>search</find>
+      <find>createBinaryGrid</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -122,8 +123,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -164,6 +163,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -235,8 +236,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49918434" visible="true" weight="0.15138593" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49918434" visible="true" weight="0.15298508" />
       <window_info id="Structure" order="1" sideWeight="0.5008157" side_tool="true" weight="0.15640274" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -303,11 +305,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/classes/PuzzleImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="133">
+          <caret line="54" column="41" lean-forward="true" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
           <folding>
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#545#546#0" expanded="true" />
             <element signature="e#4776#4777#0" expanded="true" />
             <element signature="e#4844#4845#0" expanded="true" />
           </folding>
@@ -316,12 +316,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/classes/DLL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="220" column="33" lean-forward="true" selection-start-line="220" selection-start-column="33" selection-end-line="220" selection-end-column="33" />
+        <state relative-caret-position="969">
+          <caret line="204" column="18" lean-forward="true" selection-start-line="204" selection-start-column="18" selection-end-line="204" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#push#0;class#DLL#0" />
-            <element signature="e#4531#4543#0" expanded="true" />
           </folding>
         </state>
       </provider>
