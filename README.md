@@ -1,3 +1,3 @@
 # SudokuSolver
 For the 2019 Additude test
-Sudoku solver based on reduction an Algorithm-x
+Sudoku solver based on reduction, dancing links and Algorithm-x
