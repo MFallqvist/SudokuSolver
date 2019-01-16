@@ -1,25 +1,29 @@
 package main.classes;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // The solution is built on reduction to binary matrix M built with doubly linked lists
 public class PuzzleImp implements Puzzle {
-    private static int N = 9;
-    int clues;
-    byte[][] sudoku = new byte[N][N];
+    public static int N = 9;
+    private int clues;
+    public byte[][] sudoku = new byte[N][N];
 
     // Returns true if puzzle is solved
     public boolean isSolved() {
-        if (clues == N*N){
+        if (isValid() && clues == N*N){
+            System.out.println("Sudoku finished with solution: \n");
+            showPuzzle();
             return true;
         }
         else{
+            System.out.println("Sudoku failed with board state: \n");
+            System.out.println("Sudoku failed clues: "+clues+" \n");
+            showPuzzle();
             return false;
         }
     }
@@ -30,17 +34,57 @@ public class PuzzleImp implements Puzzle {
         if (clues < 17){
             return false;
         }else{
-            return true;
+            if(validateBoard()){
+                return true;
+            }
+            return false;
         }
     }
+    // Validate sudoku board
+    protected boolean validateBoard(){
+        boolean[] b = new boolean[N+1];
+        clues=0;
+        // Check that each row contains 1-N
+        for(int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if (sudoku[i][j] == 0)
+                    continue;
+                if (b[sudoku[i][j]])
+                    return false;
+                b[sudoku[i][j]] = true;
+                clues++;
+            }
+            Arrays.fill(b, false);
+        }
+        //  Check that each box contains the numbers
+        int side = N/3;
+
+        for(int i = 0; i < N; i += side){
+            for(int j = 0; j < N; j += side){
+                for(int d1 = 0; d1 < side; d1++){
+                    for(int d2 = 0; d2 < side; d2++){
+                        if (sudoku[i + d1][j + d2] == 0)
+                            continue;
+                        if (b[sudoku[i + d1][j + d2]])
+                            return false;
+                        b[sudoku[i + d1][j + d2]] = true;
+                    }
+                }
+                Arrays.fill(b, false);
+            }
+        }
+        return true;
+    }
+
 
     // Generates a solution. Does not modify the current puzzle.
     public Puzzle solve() {
-        Puzzle solution = null;
+        //Puzzle solution = null;
         int[][] binary_grid = createBinaryGrid();
         DLL solver = new DLL(binary_grid);
-
-        return solution;
+        SolutionParser parser = new SolutionParser(solver.solution);
+        sudoku = parser.grid.sudoku;
+        return parser.grid;
     }
 
     // Loads a puzzle from a file
@@ -58,7 +102,7 @@ public class PuzzleImp implements Puzzle {
             //Vector<Integer> r = new Vector<>();
             byte[] r = new byte[N];
             for (int j = 0; j < N; j++) {
-                if (dot.charAt(0) == input.get(i).charAt(j)){
+                if (dot.charAt(0) == input.get(i).charAt(j) || 0 == input.get(i).charAt(j)){
                     //r.add(0);
                     r[j] = 0;
                 }else{
@@ -72,22 +116,36 @@ public class PuzzleImp implements Puzzle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        showPuzzle();
     }
 
     // Saves a puzzle to a file
     public void save(String path) {
+        try (BufferedWriter stream = new BufferedWriter(new FileWriter(path))) {
+
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    stream.write((sudoku[i][j])+" ");
+
+                }
+                stream.write("\r\n");
+                }
+            }
+
+        catch(Exception e){
+
+        }
 
     }
     // Prints the puzzle
-    public void showPuzzle() {
+    private void showPuzzle() {
+        System.out.println("Current puzzle state: \n");
         for (int i = 0; i < N; i++) {
-            //Vector<Integer> r = sudoku.get(i);
             for (int j = 0; j < N; j++) {
                 System.out.print(sudoku[i][j]+" ");
             }
             System.out.println();
         }
+        System.out.println("\n");
     }
 
     // Code added and modified from github rafailo 20190115
@@ -160,7 +218,7 @@ public class PuzzleImp implements Puzzle {
 
         return R;
     }
-    // row [1,S], col [1,S], num [1,S]
+
     private int getIdx(int row, int col, int num){
         return (row - 1) * N * N + (col - 1) * N + (num - 1);
     }

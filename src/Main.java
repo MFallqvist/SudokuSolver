@@ -7,9 +7,11 @@ public class Main {
 
     public static void main(String[] args){
         Puzzle myPuzzle = new PuzzleImp();
-        String path = "G:\\Arbete\\Git\\SudokuSolver\\Data\\puzzles.txt";
-        myPuzzle.load(path);
+        String path = "G:\\Arbete\\Git\\SudokuSolver\\Data\\"; //puzzles.txt";
+        myPuzzle.load(path+"puzzle2.txt");
         myPuzzle.solve();
+        myPuzzle.isSolved();
+        myPuzzle.save(path+"solution.txt");
     }
 
 }
