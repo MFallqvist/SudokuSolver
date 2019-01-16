@@ -9,6 +9,7 @@ public class DLL {
     private List<Node> solution = new ArrayList<>();
     private int solutions;
 
+    // Constructor to be fed binary matrix, out comes DLL matrix
     DLL(int[][] sudoku){
         root = DLL_grid(sudoku);
         runSolver();
@@ -20,7 +21,6 @@ public class DLL {
         ColumnNode col;
 
         // Constructor to create a new node
-        // next and prev is by default initialized as null
         Node() {
             data = 0;
             row = 0;
@@ -50,6 +50,7 @@ public class DLL {
         }
 
     }
+    // ColumnNode to present top row with size info and name
     public class ColumnNode extends Node{
         int size = 0;
         String name;
@@ -59,7 +60,7 @@ public class DLL {
             col = this;
         }
     }
-    // Based on Algorithm-X
+    // Search is based on Algorithm-X to solve exact cover problem
     private void search(int k){
         System.out.print("Function call search, depth: "+k+"\n");
         Node c, r, j;
@@ -92,7 +93,6 @@ public class DLL {
             return;
         }
     }
-
 
     // Used to backtrack to covered Node
     public void uncover(Node c){
@@ -130,7 +130,7 @@ public class DLL {
             i = i.down;
         }
     }
-
+    // Choose the ColumnNode with fewest data points
     ColumnNode choose_column_object(){
         //System.out.print("Function call choose_column_object\n");
         ColumnNode chosen;
@@ -152,8 +152,9 @@ public class DLL {
         }
         return chosen;
     }
+    // To print the current solution list
     void print_solution(){
-        System.out.print("Function call print_solution, size: " +solution.size()+"\n");
+        System.out.print("Function call print_solution with solution.size(): " +solution.size()+"\n");
         Node i;
         try {
             i = solution.remove(solution.size() - 1);
@@ -199,7 +200,7 @@ public class DLL {
 
         return headerNode;
     };
-
+    // Helper to run and print
     public void runSolver(){
         search(0);
         print_solution();

@@ -16,7 +16,12 @@ public class PuzzleImp implements Puzzle {
 
     // Returns true if puzzle is solved
     public boolean isSolved() {
-        return true;
+        if (clues == N*N){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     // Returns true if board is valid
@@ -74,7 +79,7 @@ public class PuzzleImp implements Puzzle {
     public void save(String path) {
 
     }
-
+    // Prints the puzzle
     public void showPuzzle() {
         for (int i = 0; i < N; i++) {
             //Vector<Integer> r = sudoku.get(i);
